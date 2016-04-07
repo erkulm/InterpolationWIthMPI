@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		71C3DFEA1CB7117800713D13 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71C3DFE91CB7117800713D13 /* main.cpp */; };
+		71C3DFF31CB7139900713D13 /* libmpi_cxx.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71C3DFF21CB7139900713D13 /* libmpi_cxx.1.dylib */; };
+		71C3DFF51CB713D200713D13 /* libmpi.12.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71C3DFF41CB713D200713D13 /* libmpi.12.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,10 @@
 /* Begin PBXFileReference section */
 		71C3DFE61CB7117800713D13 /* InterpolationWithMPI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = InterpolationWithMPI; sourceTree = BUILT_PRODUCTS_DIR; };
 		71C3DFE91CB7117800713D13 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		71C3DFF01CB7134D00713D13 /* openmpi */ = {isa = PBXFileReference; lastKnownFileType = folder; name = openmpi; path = ../../../../../usr/local/lib/openmpi; sourceTree = "<group>"; };
+		71C3DFF21CB7139900713D13 /* libmpi_cxx.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmpi_cxx.1.dylib; path = ../../../../../usr/local/lib/libmpi_cxx.1.dylib; sourceTree = "<group>"; };
+		71C3DFF41CB713D200713D13 /* libmpi.12.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmpi.12.dylib; path = ../../../../../usr/local/lib/libmpi.12.dylib; sourceTree = "<group>"; };
+		71C3DFF61CB714D300713D13 /* test_dosyasi.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = test_dosyasi.txt; path = ../../../../Downloads/test_dosyasi.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +38,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71C3DFF51CB713D200713D13 /* libmpi.12.dylib in Frameworks */,
+				71C3DFF31CB7139900713D13 /* libmpi_cxx.1.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +49,9 @@
 		71C3DFDD1CB7117800713D13 = {
 			isa = PBXGroup;
 			children = (
+				71C3DFF41CB713D200713D13 /* libmpi.12.dylib */,
+				71C3DFF21CB7139900713D13 /* libmpi_cxx.1.dylib */,
+				71C3DFF01CB7134D00713D13 /* openmpi */,
 				71C3DFE81CB7117800713D13 /* InterpolationWithMPI */,
 				71C3DFE71CB7117800713D13 /* Products */,
 			);
@@ -58,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				71C3DFE91CB7117800713D13 /* main.cpp */,
+				71C3DFF61CB714D300713D13 /* test_dosyasi.txt */,
 			);
 			path = InterpolationWithMPI;
 			sourceTree = "<group>";
@@ -209,14 +221,18 @@
 		71C3DFEE1CB7117800713D13 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"LIBRARY_SEARCH_PATHS[arch=*]" = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = /usr/local/include;
 			};
 			name = Debug;
 		};
 		71C3DFEF1CB7117800713D13 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"LIBRARY_SEARCH_PATHS[arch=*]" = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = /usr/local/include;
 			};
 			name = Release;
 		};
