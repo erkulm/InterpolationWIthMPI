@@ -12,10 +12,22 @@
 #include "mpi.h"
 #include<fstream>
 #include <iomanip>
+#include <vector>
 using namespace std;
+/*
+ get square of the distance between two points 
+ arguments will be changed to two point objects
+ after refactoring
+ 
+ */
+int getDistanceSquared(int x1, int y1, int z1, int t1, int x2, int y2, int z2, int t2){
+    return abs(x1-x2)*abs(y1-y2)*abs(z1-z2)*abs(t1-t2);
+}
 
 int main(int argc, char* argv[])
 {
+    
+    int distances[100][100];
     int rank,nproc;
     int number=0,tmp, p,i;
     float distance=0.0, agirlik=0.0, deger=0.0;
@@ -62,6 +74,103 @@ geri:
         cout<<endl<<"Yanlis giris yaptiniz. Bir daha deneyin!";
         goto geri;
     }
+    
+    // buffer for the coordinates of the current point
+    int x_pos=0;
+    int y_pos=0;
+    int z_pos=0;
+    int t_pos=0;
+    
+    
+    // buffer for the coordinates of other points
+    
+    int x_posArray[100];
+    int y_posArray[100];
+    int z_posArray[100];
+    int t_posArray[100];
+    
+    
+    // display buffer
+    
+    int display[100];
+    
+    
+    
+    if (rank==0) {
+        for (int j = 0; j<ceil(number/2); j++) {
+            if(i != j){
+                
+                x_pos = bolge_x[j];
+                y_pos = bolge_y[j];
+                z_pos = bolge_yuks[j];
+                t_pos = bolge_sic[j];
+                
+                // send the coordinates of the point to all processes
+                MPI_Send(&x_pos, 1, MPI_INT, j%nproc, 0, MPI_COMM_WORLD);
+                MPI_Send(&y_pos, 1, MPI_INT, j%nproc, 0, MPI_COMM_WORLD);
+                MPI_Send(&z_pos, 1, MPI_INT, j%nproc, 0, MPI_COMM_WORLD);
+                MPI_Send(&t_pos, 1, MPI_INT, j%nproc, 0, MPI_COMM_WORLD);
+                
+                
+                for (int i = 0; i<ceil(number/2); i++) {
+                    
+                    x_posArray[i] = bolge_x[i];
+                    y_posArray[i] = bolge_y[i];
+                    z_posArray[i] = bolge_yuks[i];
+                    t_posArray[i] = bolge_sic[i];
+                    
+                    // distribute the coordinates to all processes
+                    MPI_Send(&x_posArray[i], 1, MPI_INT, i%nproc, 0, MPI_COMM_WORLD);
+                    MPI_Send(&y_posArray[i], 1, MPI_INT, i%nproc, 0, MPI_COMM_WORLD);
+                    MPI_Send(&z_posArray[i], 1, MPI_INT, i%nproc, 0, MPI_COMM_WORLD);
+                    MPI_Send(&t_posArray[i], 1, MPI_INT, i%nproc, 0, MPI_COMM_WORLD);
+                    
+                }
+            }
+        }
+    }
+    else{
+        
+        cout<<"else"<<endl;
+        for (int j=0; j<ceil(number/2); j++) {
+            MPI_Recv(&x_pos, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            MPI_Recv(&y_pos, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            MPI_Recv(&z_pos, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            MPI_Recv(&t_pos, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            
+            for (int i =0; i<ceil(number/2); i++) {
+                MPI_Recv(&x_posArray, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Recv(&y_posArray, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Recv(&z_posArray, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Recv(&t_posArray, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                
+                distances[j][i] = getDistanceSquared(x_pos,y_pos,z_pos,t_pos,x_posArray[i],y_posArray[i],z_posArray[i],t_posArray[i]);
+                MPI_Send(&distances[j][i], 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
+                
+            }
+            
+            
+        }
+        
+    }
+    
+    if (rank==0) {
+        
+        for (int i = 0; i < number; i++) {
+            MPI_Recv(&display[i], 1, MPI_INT, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            cout<<display[i]<<'\t';
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     cout<<nproc<<endl;
     if (rank==0) {
