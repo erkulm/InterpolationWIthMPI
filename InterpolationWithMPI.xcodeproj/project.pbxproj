@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		71565F8A1CBD996C0018C0EC /* point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71565F881CBD996C0018C0EC /* point.cpp */; };
 		71C3DFEA1CB7117800713D13 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71C3DFE91CB7117800713D13 /* main.cpp */; };
 		71C3DFF31CB7139900713D13 /* libmpi_cxx.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71C3DFF21CB7139900713D13 /* libmpi_cxx.1.dylib */; };
 		71C3DFF51CB713D200713D13 /* libmpi.12.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71C3DFF41CB713D200713D13 /* libmpi.12.dylib */; };
@@ -25,6 +26,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		71565F881CBD996C0018C0EC /* point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = point.cpp; sourceTree = "<group>"; };
+		71565F891CBD996C0018C0EC /* point.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = point.hpp; sourceTree = "<group>"; };
 		71C3DFE61CB7117800713D13 /* InterpolationWithMPI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = InterpolationWithMPI; sourceTree = BUILT_PRODUCTS_DIR; };
 		71C3DFE91CB7117800713D13 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		71C3DFF01CB7134D00713D13 /* openmpi */ = {isa = PBXFileReference; lastKnownFileType = folder; name = openmpi; path = ../../../../../usr/local/lib/openmpi; sourceTree = "<group>"; };
@@ -70,6 +73,8 @@
 			children = (
 				71C3DFE91CB7117800713D13 /* main.cpp */,
 				71C3DFF61CB714D300713D13 /* test_dosyasi.txt */,
+				71565F881CBD996C0018C0EC /* point.cpp */,
+				71565F891CBD996C0018C0EC /* point.hpp */,
 			);
 			path = InterpolationWithMPI;
 			sourceTree = "<group>";
@@ -130,6 +135,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71565F8A1CBD996C0018C0EC /* point.cpp in Sources */,
 				71C3DFEA1CB7117800713D13 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,6 +261,7 @@
 				71C3DFEF1CB7117800713D13 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
