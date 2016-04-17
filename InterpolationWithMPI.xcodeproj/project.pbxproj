@@ -13,6 +13,17 @@
 		71C3DFF51CB713D200713D13 /* libmpi.12.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71C3DFF41CB713D200713D13 /* libmpi.12.dylib */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		71555E441CC2BB12004C0FE6 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+			);
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		71C3DFE41CB7117800713D13 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -91,6 +102,7 @@
 				71C3DFE41CB7117800713D13 /* CopyFiles */,
 			);
 			buildRules = (
+				71555E441CC2BB12004C0FE6 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -228,6 +240,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"LIBRARY_SEARCH_PATHS[arch=*]" = /usr/local/lib;
+				New_Setting = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = /usr/local/include;
 			};
@@ -237,6 +250,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"LIBRARY_SEARCH_PATHS[arch=*]" = /usr/local/lib;
+				New_Setting = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = /usr/local/include;
 			};

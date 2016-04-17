@@ -21,7 +21,14 @@ using namespace std;
  
  */
 int getDistanceSquared(int x1, int y1, int z1, int t1, int x2, int y2, int z2, int t2){
-    return abs(x1-x2)*abs(y1-y2)*abs(z1-z2)*abs(t1-t2);
+    ofstream test;
+    test.open("/Users/Mahmut/Downloads/test.txt");
+    int rank;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    int result = pow(abs(x1-x2),2)+pow(abs(y1-y2),2)+pow(abs(z1-z2),2)+pow(abs(t1-t2),2);
+    test << "rank = " << rank << "result = " << result << endl;
+    test.close();
+    return result;
 }
 
 int main(int argc, char* argv[])
@@ -39,7 +46,7 @@ int main(int argc, char* argv[])
     float mevcut_x, mevcut_y,mevcut_yuks,mevcut_sic, sonuc = 0.0,toplam = 0.0;
     ifstream file;
     
-    MPI_Init(&argc, &argv);
+    MPI_Init(NULL, NULL);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &nproc);
     
@@ -67,13 +74,12 @@ int main(int argc, char* argv[])
     cin>>mevcut_y;
     cout<<std::endl<<"Lütfen istenilen bolgenin yuksekligini giriniz:";
     cin>>mevcut_yuks;
-geri:
     cout<<std::endl<<"Lütfen p degerini giriniz:";
     cin>>p;
-    if (p<1) {
-        cout<<endl<<"Yanlis giris yaptiniz. Bir daha deneyin!";
-        goto geri;
-    }
+//    if (p<1) {
+//        cout<<endl<<"Yanlis giris yaptiniz. Bir daha deneyin!";
+//        goto geri;
+//    }
     
     // buffer for the coordinates of the current point
     int x_pos=0;
@@ -92,7 +98,7 @@ geri:
     
     // display buffer
     
-    int display[100];
+    int display[100][100];
     
     
     
@@ -139,13 +145,15 @@ geri:
             MPI_Recv(&t_pos, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             
             for (int i =0; i<ceil(number/2); i++) {
-                MPI_Recv(&x_posArray, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-                MPI_Recv(&y_posArray, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-                MPI_Recv(&z_posArray, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-                MPI_Recv(&t_posArray, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Recv(&x_posArray[i], 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Recv(&y_posArray[i], 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Recv(&z_posArray[i], 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Recv(&t_posArray[i], 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
                 
                 distances[j][i] = getDistanceSquared(x_pos,y_pos,z_pos,t_pos,x_posArray[i],y_posArray[i],z_posArray[i],t_posArray[i]);
-                MPI_Send(&distances[j][i], 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
+                
+                display[j][i] = distances[j][i];
+                MPI_Send(&display[j][i], 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
                 
             }
             
@@ -156,9 +164,12 @@ geri:
     
     if (rank==0) {
         
-        for (int i = 0; i < number; i++) {
-            MPI_Recv(&display[i], 1, MPI_INT, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            cout<<display[i]<<'\t';
+        for (int i = 0; i < ceil(number/2); i++) {
+            for (int j = 0; j<ceil(number/2); j++) {
+                MPI_Recv(&display[i][j], 1, MPI_INT, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                cout<<display[i][j]<<'\t';
+            }
+       
         }
     }
     
